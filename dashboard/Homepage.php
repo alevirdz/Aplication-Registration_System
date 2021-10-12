@@ -1,3 +1,11 @@
+<!--
+* Autor: Alevi                                                                    
+* Sistema: Registros                                                                  
+* Módulo: Panel principal           
+* Generado por: Isaac Alevi Rodriguez Cauich
+* Fecha de Generación: 30/08/21
+* Descripción: Vista rápida para ver información de cada módulo
+ -->
 <?php 
 include ('../recepcion/form-profile.php');
 include ('../recepcion/form-panel.php');
@@ -9,7 +17,7 @@ include ('../recepcion/form-panel.php');
 	</div>
 </div>
 <div class="row">
-<?php if ($rolUser != "2") {?>
+<?php if ($rolUser === "1") {?>
 				<div class="col-xl-6 col-xxl-5 d-flex">
 					<div class="w-100">
 						<div class="row">
@@ -27,6 +35,15 @@ include ('../recepcion/form-panel.php');
 									<div class="card-body">
 										<h5 class="card-title mb-4">Inscritos</h5>
 										<h1 class="mt-1 mb-3"><?php echo $inscriptions;  ?></h1>
+										<div class="mb-1">
+											<span class="text-muted">Desde la última semana</span>
+										</div>
+									</div>
+								</div>
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title mb-4">Visita nueva</h5>
+										<h1 class="mt-1 mb-3"><?php echo $newPerson;  ?></h1>
 										<div class="mb-1">
 											<span class="text-muted">Desde la última semana</span>
 										</div>
@@ -78,7 +95,7 @@ include ('../recepcion/form-panel.php');
 
 							<h5 class="card-title mb-0">Lista de usuarios</h5>
 						</div>
-						<table class="table table-hover my-0">
+						<table class="table table-hover table-responsive my-0">
 							<thead>
 								<tr>
 									<th>Nombres</th>
@@ -119,7 +136,7 @@ include ('../recepcion/form-panel.php');
 					</div>
 				</div>
 			</div> -->
-<?php } else {?>
+<?php } else if ($rolUser === "2"){?>
 	<div class="col-xl-6 col-xxl-5 d-flex">
 					<div class="w-100">
 						<div class="row">
@@ -162,8 +179,50 @@ include ('../recepcion/form-panel.php');
 					</div>
 				</div>
 			</div>
-<?php } ?>
+<?php } else if ($rolUser === "3") {?>
+	<div class="col-xl-6 col-xxl-5 d-flex">
+					<div class="w-100">
+						<div class="row">
+							<div class="col-sm-6">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title mb-4">Visitas nuevas</h5>
+										<h1 class="mt-1 mb-3"><?php echo $newPerson; ?></h1>
+										<div class="mb-1">
+											<span class="text-muted">Desde la última semana</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-6">
+								<div class="card">
+									<div class="card-body">
+										<h5 class="card-title mb-4">Total de productos</h5>
+										<h1 class="mt-1 mb-3">-- --</h1>
+										<div class="mb-1">
+											<span class="text-muted">Desde la última semana</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xl-6 col-xxl-7">
+					<div class="card flex-fill w-100">
+						<div class="card-header">
 
+							<h5 class="card-title mb-0">Inscripciones gráfica</h5>
+						</div>
+						<div class="card-body py-3">
+							<div class="chart chart-sm">
+								<canvas id="chartjs-dashboard-line"></canvas>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+	<?php }?>
 
 <script>
 

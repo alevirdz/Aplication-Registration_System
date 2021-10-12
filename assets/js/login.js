@@ -6,14 +6,12 @@ function login (){
     };
     $.ajax({
         type: "POST",
-        /* ../../recepcion/form-sesion.php WEB*/
         url:"recepcion/form-sesion.php",
         data: data,
         cache: false,
         // dataType: "json",
         success: function(resp){ 
             if(resp == "true"){
-                /* ../../dashboard/content/Dashboard-panel.php WEB */
                 window.location="dashboard/content/Dashboard-panel.php";
                 
            }else if(resp == 'no_pwd_mail'){

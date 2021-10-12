@@ -18,17 +18,18 @@ if( isset($_POST['showRegister']) )
     echo json_encode($userData);     
 }
 
+//Se establece limite
 if( isset($_POST['limit']) && 
     isset($_POST['stop']) && 
     !empty($_POST['limit']) && 
     !empty($_POST['stop']))
 {
     $stoping = trim($_POST['stop']);
-    //var_dump($stoping);
     $stmt = $BD->prepare("UPDATE configuraciones SET limite_inscripciones=?");
     $stmt->bindParam(1, $stoping);
     $stmt->execute();
-    echo 'Update_limit_inscriptions';
+    //echo 'Update_limit_inscriptions';
+    echo "true";
 }
 
 
@@ -58,7 +59,7 @@ if(
        $userAge         = trim($_POST['edad']);
        $userPhone       = trim($_POST['telefono']);
        $userEmail       = trim($_POST['correo']);
-       $userAsignacion  = trim($_POST['asignacion']);
+       $userAsignation  = trim($_POST['asignacion']);
        $userAbono       = trim($_POST['abono']);
 
        $checkedName         = checkedText($userName);
@@ -66,7 +67,7 @@ if(
        $checkedAge          = checkedAge($userAge);
        $checkedPhone        = checkedPhone($userPhone);
        $checkedEmail        = checkedEmail($userEmail);
-       $checkedAsignacion   = checkedText($userAsignacion);
+       $checkedAsignation   = checkedNumber($userAsignation);
        $checkedAbono        = checkedNumber($userAbono);
 
        if(  
@@ -75,7 +76,7 @@ if(
             $checkedAge && 
             $checkedPhone && 
             $checkedEmail &&
-            $checkedAsignacion &&
+            $checkedAsignation &&
             $checkedAbono
         ){
             //Verifica el limite
@@ -91,20 +92,44 @@ if(
             if ($count >= $recordLimit){ 
                 echo "reached_limit";
             }else{
-            $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo, asignacion, abono ) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            $stmt->bindParam(1, $userName);
-            $stmt->bindParam(2, $userSurname);
-            $stmt->bindParam(3, $userAge);
-            $stmt->bindParam(4, $userPhone);
-            $stmt->bindParam(5, $userEmail);
-            $stmt->bindParam(6, $userAsignacion);
-            $stmt->bindParam(7, $userAbono);
-            $stmt->execute();
-            echo 'true';
+
+                $Invited = "Invitado";
+                $Servant = "Servidor";
+
+                switch($userAsignation){
+                    case 01:
+                        $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo, asignacion, abono ) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bindParam(1, $userName);
+                        $stmt->bindParam(2, $userSurname);
+                        $stmt->bindParam(3, $userAge);
+                        $stmt->bindParam(4, $userPhone);
+                        $stmt->bindParam(5, $userEmail);
+                        $stmt->bindParam(6, $Invited);
+                        $stmt->bindParam(7, $userAbono);
+                        $stmt->execute();
+                        echo 'true';
+                        break;
+                    case 02:
+                        $stmt = $BD->prepare("INSERT INTO inscripciones (nombre, apellidos, edad, telefono, correo, asignacion, abono ) VALUES (?, ?, ?, ?, ?, ?, ?)");
+                        $stmt->bindParam(1, $userName);
+                        $stmt->bindParam(2, $userSurname);
+                        $stmt->bindParam(3, $userAge);
+                        $stmt->bindParam(4, $userPhone);
+                        $stmt->bindParam(5, $userEmail);
+                        $stmt->bindParam(6, $Servant);
+                        $stmt->bindParam(7, $userAbono);
+                        $stmt->execute();
+                        echo 'true';
+                        break;
+                    default: 
+                        echo "not_exit_option";
+                        break;
+                }
+
             } 
 
        }else{
-           echo "false";
+           echo "data_invalid";
        }
    }else{
        echo "empty_fields";
@@ -153,7 +178,7 @@ if(
             $userAge        = trim($_POST['edad']);
             $userPhone      = trim($_POST['telefono']);
             $userEmail      = trim($_POST['correo']);
-            $userAsignacion = trim($_POST['asignacion']);
+            $userAsignation = trim($_POST['asignacion']);
             $userAbono      = trim($_POST['abono']);
             
             $checkedName         = checkedText($usernName);
@@ -161,7 +186,7 @@ if(
             $checkedAge          = checkedAge($userAge);
             $checkedPhone        = checkedPhone($userPhone);
             $checkedEmail        = checkedEmail($userEmail);
-            $checkedAsignacion   = checkedText($userAsignacion);
+            $checkedAsignation   = checkedNumber($userAsignation);
             $checkedAbono        = checkedNumber($userAbono);
         
         if( $checkedName && 
@@ -169,24 +194,52 @@ if(
             $checkedAge && 
             $checkedPhone && 
             $checkedEmail &&
-            $checkedAsignacion &&
+            $checkedAsignation &&
             $checkedAbono
         ){
-            //Actualiza la inscripcion
-            $stmt = $BD->prepare("UPDATE inscripciones SET nombre=?, apellidos=?, edad=?, telefono=?, correo=?, asignacion=?, abono=? WHERE id=$userId ");
-            $stmt->bindParam(1, $usernName);
-            $stmt->bindParam(2, $userSurname);
-            $stmt->bindParam(3, $userAge);
-            $stmt->bindParam(4, $userPhone);
-            $stmt->bindParam(5, $userEmail);
-            $stmt->bindParam(6, $userAsignacion);
-            $stmt->bindParam(7, $userAbono);
-            $stmt->execute();
-            echo 'userUpdate';
+            $Invited = "Invitado";
+            $Servant = "Servidor";
+            
+            switch($userAsignation){
+                case 01:
+                    //Actualiza la inscripcion
+                    $stmt = $BD->prepare("UPDATE inscripciones SET nombre=?, apellidos=?, edad=?, telefono=?, correo=?, asignacion=?, abono=? WHERE id=$userId ");
+                    $stmt->bindParam(1, $usernName);
+                    $stmt->bindParam(2, $userSurname);
+                    $stmt->bindParam(3, $userAge);
+                    $stmt->bindParam(4, $userPhone);
+                    $stmt->bindParam(5, $userEmail);
+                    $stmt->bindParam(6, $Invited);
+                    $stmt->bindParam(7, $userAbono);
+                    $stmt->execute();
+                    echo 'userUpdate';
+                    break;
+                case 02:
+                    //Actualiza la inscripcion
+                    $stmt = $BD->prepare("UPDATE inscripciones SET nombre=?, apellidos=?, edad=?, telefono=?, correo=?, asignacion=?, abono=? WHERE id=$userId ");
+                    $stmt->bindParam(1, $usernName);
+                    $stmt->bindParam(2, $userSurname);
+                    $stmt->bindParam(3, $userAge);
+                    $stmt->bindParam(4, $userPhone);
+                    $stmt->bindParam(5, $userEmail);
+                    $stmt->bindParam(6, $Servant);
+                    $stmt->bindParam(7, $userAbono);
+                    $stmt->execute();
+                    echo 'userUpdate';
+                    break;
+                default: 
+                    echo "not_exit_option";
+                    break;
+
+            }
+
         }
         else{
-            echo "false";
+            echo "data_invalid";
         }
+    }
+    else{
+        echo "empty_fields";
     }
 }
 

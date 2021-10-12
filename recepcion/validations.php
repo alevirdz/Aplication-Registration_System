@@ -66,9 +66,40 @@ function checkedSocialWeb($social){
     $isCorrect = false;
    return (1 === preg_match('/\b(?:(?:https?|ftp):\/\/|www\.)[-a-z0-9+&@#\/%?=~_|!:,.;]*[-a-z0-9+&@#\/%=~_|]/i', $social, $isCorrect ));
 }
+function checkedLocation ($userLocation){
+    switch($userLocation){
+        case 01:
+            return  'Merida';
+        break;
+        case 02:
+            return 'Caucel';
+        break;
+        case 03:
+            return 'Kanasín';
+        break;
+        case 04:
+            return 'Umán';
+        break;
+        case 05:
+            return 'Otro';
+        break;
+        default:
+            return null;
+    }
+}
+function checkedVisit ($userVisit){
+    switch($userVisit){
+        case 01:
+            return  'Joven';
+        break;
+        case 02:
+            return 'Adulto';
+        break;
+        default:
+            return null;
+    }
+}
 
-
- 
 
 
 

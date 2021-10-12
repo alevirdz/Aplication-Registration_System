@@ -6,49 +6,6 @@ Este archivo contiene las siguientes opciones:
 Insertar
 */
 
-
-if(isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
-     //Verificacion
-     if(!empty($_POST['nombre']) && !empty($_POST['correo']) && !empty($_POST['contraseña'])  && !empty($_POST['contraseña_d']) ){
-        $username = $_POST['nombre'];
-        $userEmail = $_POST['correo'];
-        $userPwd = $_POST['contraseña'];
-        $iqualPwd = $_POST['contraseña_d'];
-
-        if( $userPwd != $iqualPwd){
-            echo 'las contraseñas no son iguales';
-        }else{
-            // Preparacion BD
-            $stmt = $BD->prepare("SELECT correo FROM usuarios WHERE correo = :correo");
-            $stmt->execute(array(':correo' => $userEmail));
-            $row = $stmt->fetch(PDO::FETCH_ASSOC);
-        
-            //Si coincide?
-            if(!empty($row['correo'])){
-                echo '<div class="alert alert-warning" role="alert">
-                El nombre de usuario proporcionado ya está en uso.
-                </div>';
-            }else{
-                $defaultRemember = 'Este es un espacio para agregar una mensaje personal, como una cita, un recordatorio o un mensaje positivo...';
-                // Prepare
-                $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena, recordatorio) VALUES (?, ?, ?, ?)");
-                $hashedpwd = password_hash( $userPwd, PASSWORD_BCRYPT);
-                $stmt->bindParam(1, $username);
-                $stmt->bindParam(2, $userEmail);
-                $stmt->bindParam(3, $hashedpwd);
-                $stmt->bindParam(4, $defaultRemember);
-                // Excecute
-                $stmt->execute();
-                //echo 'Registrado'; comente esta linea
-            }
-        }
-        
-    }else{
-        echo "NA";
-    }
-}
-
-
 //Inserta un nuevo usuario con un tipo de rol
 if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST['nombre']) && isset($_POST['correo']) && isset($_POST['contraseña'])  && isset($_POST['contraseña_d']) ){
     //Verificacion
@@ -80,7 +37,7 @@ if( isset($_POST['rol_usuario']) && isset($_POST['tipo_perfil']) && isset($_POST
                }else{
                    $defaultRemember = 'Este es un espacio para agregar un mensaje personal, como una cita, un recordatorio o un mensaje positivo...';
                    $status = "Activo";
-                   $photo = "../../assets/user/profile/default_1.svg";
+                   $photo = "../../assets/user/profile/default_1.gif";
                    // Prepare
                    $stmt = $BD->prepare("INSERT INTO usuarios (nombre, correo, contrasena, recordatorio, perfil, rol, estado, foto) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
                    $hashedPwd = password_hash( $userPwd, PASSWORD_BCRYPT);
@@ -130,7 +87,7 @@ if( isset($_POST['deleteUser'])  ){
 
 }
 
-//Desactivar usuario de un usuario
+//activar usuario de un usuario
 if( isset($_POST['activar'])  && !empty($_POST['activar']) ){
     // Prepare
     $userId = trim($_POST['activar']);
@@ -148,6 +105,7 @@ if( isset($_POST['activar'])  && !empty($_POST['activar']) ){
 
 
 }
+//desactivar usuario
 if( isset($_POST['desactivar'])  && !empty($_POST['desactivar']) ){
     // Prepare
     $userId = trim($_POST['desactivar']);

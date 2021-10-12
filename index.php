@@ -4,12 +4,13 @@ include 'resources/layouts/links-header-index.php';
 ?>
 <section id="Description">
       <div class="container-fluid">
-        <div class="row ">
-          <div class="col-lg-6 content order-lg-1 order-1 slider">
+        <div class="row ">      
+          <!-- Aqui agregar un script para cambiar la imagen automaticamente  --> 
+          <div class="col-lg-6 content order-lg-1 order-1" style="background: url('./assets/theme/img_login/default1.jpg'); height: 100vh; background-size: cover; background-position: center;">
             <div class="sidenav d-flex justify-content-center align-items-center">
               <div class="white">
-                <h2>Prueba la Aplicación<br>de impulso</h2>
-                <p>Inicia sesion para tener acceso.</p>
+                <h2><?php echo TITLE_APP_WEB ?></h2>
+                <p><?php echo DESCRIPTION_APP_WEB ?></p>
               </div>
             </div>
             

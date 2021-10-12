@@ -6,7 +6,7 @@ var btnDanger = {"background": 'rgb(208 80 80)', "transition": 'all 1.3s cubic-b
 window.onload = validateForm();
 //Se carga la página inicial__aqui marca el error NETWORK
 $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();$('#item-desktop').addClass("active");});
-
+//SECCION VALIDACIONES JS 
 function validateForm (){  
     $("#formG").validate({
         rules:{
@@ -122,11 +122,12 @@ function logoutSesion(){
         }
         })
 }
+//SECCION ASIGNACION DE ROLES
 function registerdesdeAdmin(){
     $("input:radio:checked").each(function() {
         var select_tipo =  $(this).val();
             console.log(select_tipo);
-        if( select_tipo != 1){
+        if( select_tipo == 2){
             const data = {
                 "nombre":       $('#nombre').val(), 
                 "correo":       $('#correo').val(), 
@@ -143,7 +144,7 @@ function registerdesdeAdmin(){
                     if(resp == "true"){
                         Swal.fire({
                             type: 'success',
-                            title: 'El colaborador ha sido registrado',
+                            title: 'El usuario ha sido registrado',
                             showConfirmButton: false,
                             showCloseButton: true
                         })
@@ -192,7 +193,75 @@ function registerdesdeAdmin(){
                     });
                  }
             });
-        }else{
+        }
+        else if( select_tipo == 3){
+            const data = {
+                "nombre":       $('#nombre').val(), 
+                "correo":       $('#correo').val(), 
+                "contraseña":   $('#contraseña').val(), 
+                "contraseña_d": $('#contraseña_d').val(),
+                "rol_usuario":  3, 
+                "tipo_perfil": "Recepción"
+            };
+            $.ajax({
+                type: "POST",
+                url:"../../recepcion/form-register.php",
+                data: data,
+                success: function(resp){
+                    if(resp == "true"){
+                        Swal.fire({
+                            type: 'success',
+                            title: 'El usuario ha sido registrado',
+                            showConfirmButton: false,
+                            showCloseButton: true
+                        })
+                    }else if(resp == "data_invalid"){
+                         // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                         Swal.fire({
+                            type: 'warning',
+                            title: 'Houston, tenemos un problema...',
+                            text: 'Uno o más campos no están correctamente, verifícalos...',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "pwd_not_match"){
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Un momento',
+                            text: 'Parece que las contraseñas no coinciden',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "mail_use"){
+                        Swal.fire({
+                            type: 'info',
+                            title: 'Un momento',
+                            text: 'El correo electrónico ya esta en uso, prueba con otro.',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        })
+                    }else if(resp == "empty_fields"){
+                        Swal.fire({
+                            type: 'question',
+                            title: '¡Vaya! No recibí ningún dato',
+                            text: '¿Deseas intentarlo nuevamente?',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Continuar',
+                        });
+                    }
+                },
+                error: function(resp){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+                 }
+            });
+        }
+        else{
             const data = {
                 "nombre":       $('#nombre').val(), 
                 "correo":       $('#correo').val(), 
@@ -407,7 +476,7 @@ function deleteProfile( id ){
         }
         })
 }
-/*link al registro desde el front*/
+/*link al registro desde el front eliminar?*/
 function register(){
     const data = {
         "nombre":       $('#nombre').val(), 
@@ -447,6 +516,7 @@ function register(){
          }
     });
 }
+//SECCION DONACIONES 
 function donations(){
     const data = {
         "nombre":    $('#nombre').val(), 
@@ -583,10 +653,10 @@ function showDonation(){
                     "searchPlaceholder":	"Buscar",
                     "zeroRecords":			"No se han encontrado coincidencias.",
                     "paginate": {
-                        "first":			"Primera",
-                        "last":				"Última",
-                        "next":				"Siguiente",
-                        "previous":			"Anterior"
+                        "first":			"<span style='font-size:12px'>Primera</span>",
+                        "last":				"<span style='font-size:12px'>Última</span>",
+                        "next":				"<span style='font-size:12px'>Siguiente</span>",
+                        "previous":			"<span style='font-size:12px'>Anterior</span>"
                     },
                     "aria": {
                         "sortAscending":	"Ordenación ascendente",
@@ -702,6 +772,7 @@ function deleteDonationAll( ){
         }
         });
 }
+//SECCION INSCRIPCIONES 
 function limitInscripcions(){
     const data = {
         "stop": $('#limit').val(),
@@ -713,33 +784,34 @@ function limitInscripcions(){
         data: data,
         success: function(resp){
             if(resp == "true"){
-                var btnDonate = $("#btn-limit");
-                btnDonate.css(btnSuccess);
-                btnDonate.text("Se ha registrado");
-                btnDonate.animate({
+                var btnLimitInscription = $("#btn-limit");
+                btnLimitInscription.css(btnSuccess);
+                btnLimitInscription.text("Actualizado");
+                btnLimitInscription.animate({
                     height: '10px', 
                     opacity: '0.4',
                 }, 500,);
                 setTimeout(function() {
-                    btnDonate.css(btnSuccess);
-                    btnDonate.text("Se ha registrado");
-                    btnDonate.animate({
+                    btnLimitInscription.css(btnSuccess);
+                    btnLimitInscription.text("Actualizado");
+                    btnLimitInscription.animate({
                         height: '100%', 
                         opacity: '0.8',
                     }, 800,);
-                    btnDonate.css(btnStatic);
-                    btnDonate.animate({
+                    btnLimitInscription.css(btnStatic);
+                    btnLimitInscription.animate({
                         height: '100%', 
                         opacity: '1',
                     }, 800,);
-                    btnDonate.text("Guardar");
+                    btnLimitInscription.text("Guardar");
                     $('#formG').trigger("reset");
                 }, 1000);
                 Swal.fire({
                     type: 'success',
-                    title: 'Gracias por registrarte',
+                    title: 'Límite ampliado',
                     showConfirmButton: false,
-                    showCloseButton: true
+                    showCloseButton: true,
+                    timer: 1000,
                 })
             }
         },
@@ -766,17 +838,6 @@ function inscriptions(ext){
         "createInscriptions": true,
     };
 
-    /* switch (ext) {
-        case "1":
-            url = "../recepcion/form-inscriptions.php";
-          break;
-        case "0":
-            url = "../../recepcion/form-inscriptions.php";
-          break;
-        default: "NA";
-          break;
-      }
- */
     if(ext == 1){url = "../recepcion/form-inscriptions.php";} //url externa
     else{url = "../../recepcion/form-inscriptions.php";}
     
@@ -812,9 +873,10 @@ function inscriptions(ext){
                     type: 'success',
                     title: 'Gracias por registrarte',
                     showConfirmButton: false,
-                    showCloseButton: true
+                    showCloseButton: true,
+                    timer: 1000,
                 })
-            }else if(resp == "false"){
+            }else if(resp == "data_invalid"){
                 var btnInscription =  $("#btn-inscription");
                 btnInscription.css(btnWarning);
                 btnInscription.text("Sin registro, Se detectaron campos erroneos");
@@ -844,7 +906,24 @@ function inscriptions(ext){
                         showConfirmButton: true,
                         confirmButtonText: 'Continuar',
                     })
-            }else if(resp == "empty_fields"){
+            }
+            else if(resp == "not_exit_option"){
+                var btnInscription =  $("#btn-update-register");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin resultados");
+                    setTimeout(function() {
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'El sistema no encontró la opción de visita selecionada',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }
+            else if(resp == "empty_fields"){
                 var btnInscription =  $("#btn-inscription");
                 btnInscription.css(btnDanger);
                 btnInscription.text("Los campos estan vacios");
@@ -926,11 +1005,17 @@ function showInscriptions(){
                     "searchPlaceholder":	"Buscar",
                     "zeroRecords":			"No se han encontrado coincidencias.",
                     "paginate": {
-                        "first":			"Primera",
-                        "last":				"Última",
-                        "next":				"Siguiente",
-                        "previous":			"Anterior"
+                        "first":			"<span style='font-size:12px'>Primera</span>",
+                        "last":				"<span style='font-size:12px'>Última</span>",
+                        "next":				"<span style='font-size:12px'>Siguiente</span>",
+                        "previous":			"<span style='font-size:12px'>Anterior</span>"
                     },
+                    /* "oPaginate": {
+                        "sNext": '<i class="fa fa-forward"></i>',
+                        "sPrevious": '<i class="fa fa-backward"></i>',
+                        "sFirst": '<i class="fa fa-step-backward"></i>',
+                        "sLast": '<i class="fa fa-step-forward"></i>'
+                        }, */
                     "aria": {
                         "sortAscending":	"Ordenación ascendente",
                         "sortDescending":	"Ordenación descendente"
@@ -955,12 +1040,6 @@ function showInscriptions(){
                 ],
                 
             });
-            /* table.dataTable().ajax.reload(); */
-            /* getDataEdit("#datable tbody", table); */
-            /* $('tr td:last-child').click(function(){
-                 console.log($(this).parent().find('td:first').text());
-            }); */
-           
         }    
     });
 
@@ -996,7 +1075,11 @@ function editInscriptions(ids){
             </div>
             <div class="mb-3">
                 <label for="user" class="form-label">Tipo de Asginación</label>
-                <input type="text" class="form-control" name="asignacion" id="asignacion" placeholder="Escriba una asignación Invitado ó Servidor" value="${resp.asignacion}" >
+                <select class="form-select" name="asignacion" id="asignacion" required>
+                    <option selected >Seleciona una opción</option>
+                    <option value="01">Invitado</option>
+                    <option value="02">Servidor(a)</option>
+                </select>
             </div>
             <div class="mb-3">
                 <label for="user" class="form-label">Abono</label>
@@ -1057,14 +1140,46 @@ function updateInscriptions( id ){
                    
                 }, 1000);
             }
-            else if(resp == "error_letters" || "error_email"){
-                var btnUpdateRegister = $("#btn-update-register");
-                btnUpdateRegister.css(btnWarning);
-                btnUpdateRegister.text("Verifique los campos");
+            else if(resp == "data_invalid"){
+                var btnInscription =  $("#btn-inscription");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin registro, Se detectaron campos erroneos");
                     setTimeout(function() {
-                        btnUpdateRegister.css(btnStatic);
-                        btnUpdateRegister.text("Actualizar");
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
                     }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Uno o más campos no están correctamente, verifícalos...',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }
+            else if(resp == "not_exit_option"){
+                var btnInscription =  $("#btn-update-register");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin resultados");
+                    setTimeout(function() {
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'El sistema no encontró la opción de visita selecionada',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }
+            else if(resp == "empty_fields"){
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibí ningún dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
             }
         },
         error: function(resp){
@@ -1142,9 +1257,8 @@ function inscriptionDeleteAll( ){
                 url: "../../recepcion/form-inscriptions.php",
                 data: data,
                 success: function(resp){
-                    console.log(resp)
                     if(resp == "true"){
-                        $('#table-register').empty()
+                        $('#datable').DataTable().clear();
                         showInscriptions();
                     }
                 },
@@ -1164,6 +1278,438 @@ function inscriptionDeleteAll( ){
         }
         });
 }
+//SECCION PERSONAS NUEVAS
+function inscriptionNewPerson(){
+const data = {
+    "nombre":    $('#nombre').val(), 
+    "apellidos": $('#apellidos').val(),
+    "telefono":  $('#telefono').val(),
+    "ubicacion": $('#option-location').val(),
+    "visitante":  $('#option-new-person').val(),
+    "createNewPerson": true,
+};
+$.ajax({
+    type: "POST",
+    url: "../../recepcion/form-new-person.php",
+    data: data,
+    success: function(resp){
+        if(resp == "true"){
+            var btnInscription = $("#btn-inscription");
+            btnInscription.css(btnSuccess);
+            btnInscription.text("Se ha registrado");
+            btnInscription.animate({
+                height: '10px', 
+                opacity: '0.4',
+            }, 500,);
+            setTimeout(function() {
+                btnInscription.css(btnSuccess);
+                btnInscription.text("Se ha registrado");
+                btnInscription.animate({
+                    height: '100%', 
+                    opacity: '0.8',
+                }, 800,);
+                btnInscription.css(btnStatic);
+                btnInscription.animate({
+                    height: '100%', 
+                    opacity: '1',
+                }, 800,);
+                btnInscription.text("¡Inscribirme!");
+                $('#formG').trigger("reset");
+            }, 1000);
+            Swal.fire({
+                type: 'success',
+                title: 'Gracias por registrarte',
+                showConfirmButton: false,
+                showCloseButton: true,
+                timer: 1000,
+            })
+        }else if(resp == "not_exit_option"){
+            var btnInscription =  $("#btn-inscription");
+            btnInscription.css(btnWarning);
+            btnInscription.text("Sin resultados");
+                setTimeout(function() {
+                    btnInscription.css(btnStatic);
+                    btnInscription.text("¡Inscribirme!");
+                }, 1000);
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Houston, tenemos un problema...',
+                    text: 'El sistema no encontró la opción selecionada',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                })
+        }
+        else if(resp == "data_invalid"){
+            var userUpdate =  $("#btn-inscription");
+            userUpdate.css(btnWarning);
+            userUpdate.text("Verificar los campos");
+            setTimeout(function() {
+                userUpdate.css(btnStatic);
+                userUpdate.text("Guardar");
+            }, 1000);
+            // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+            Swal.fire({
+                type: 'warning',
+                title: 'Houston, tenemos un problema...',
+                text: 'Uno o más campos no están correctamente, verifícalos...',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+    }
+    else if(resp == "empty_fields"){
+        Swal.fire({
+            type: 'question',
+            title: '¡Vaya! No recibí ningún dato',
+            text: '¿Deseas intentarlo nuevamente?',
+            showConfirmButton: true,
+            confirmButtonText: 'Continuar',
+        });
+    }
+    },
+    error: function(resp){
+       Swal.fire({
+        type: 'error',
+        title: 'Houston, tenemos un problema...',
+        text: 'Se perdió la conexión, contacta al proveedor.',
+        showConfirmButton: true,
+        confirmButtonText: 'Continuar',
+    })
+    }
+});
+}
+function showRegisterNewPerson(){
+    $('#subtitle-new-person').text("Revisa la información detallada");
+    $('#actionNewPerson').replaceWith('<button class="btn btn btn-primary white d-flex align-icons align-self-center" onclick=actionMenu((this.id)) id="new-visit"><ion-icon name="calendar-outline" size="small"></ion-icon><span id="text-option">Crear registro</span></button>') 
+    $('#new-people').replaceWith(`  
+    <div class="col col-lg-10">
+        <h5 class="card-title mb-0">Lista de inscripciones</h5> 
+    </div>
+    <div class="col col-lg-2">
+        
+    </div>      
+    <table class="table table-responsive table-striped table-hover" id="datable">
+    <thead>
+        <tr class="table-color">
+        <th scope="col">#</th>
+        <th scope="col">Nombres</th>
+        <th scope="col">Apellidos</th>
+        <th scope="col">Telefono</th>
+        <th scope="col">Ubicación</th>
+        <th scope="col">Visitó</th>
+        <th scope="col">Acciones</th>
+        </tr>
+    </thead>
+    <tbody id="table-register">
+    </tbody>
+    </table>`);
+
+     $.ajax({
+        url: "../../recepcion/form-new-person.php",
+        data: { 'showRegister' : true },
+        type: "POST",
+        success : function(data) {
+            var dataInfo = JSON.parse(data)
+            var table = $('#datable').dataTable({
+                "deferRender": true,
+                "processing": true,
+                "destroy":true,
+                "paging":   true,
+                "responsive": true,
+                "pagingType": "full_numbers",
+                "language": {
+                    "emptyTable":			"No hay datos disponibles en la tabla.",
+                    "info":		   			"Del _START_ al _END_ de _TOTAL_ ",
+                    "infoEmpty":			"Mostrando 0 registros de un total de 0.",
+                    "infoFiltered":			"(filtrados de un total de _MAX_ registros)",
+                    "infoPostFix":			"(actualizados)",
+                    "lengthMenu":			"Mostrar _MENU_ registros",
+                    "loadingRecords":		"Cargando...",
+                    "processing":			"Procesando...",
+                    "search":				"Buscar:",
+                    "searchPlaceholder":	"Buscar",
+                    "zeroRecords":			"No se han encontrado coincidencias.",
+                    "paginate": {
+                        "first":			"<span style='font-size:12px'>Primera</span>",
+                        "last":				"<span style='font-size:12px'>Última</span>",
+                        "next":				"<span style='font-size:12px'>Siguiente</span>",
+                        "previous":			"<span style='font-size:12px'>Anterior</span>"
+                    },
+                    /* "oPaginate": {
+                        "sNext": '<i class="fa fa-forward"></i>',
+                        "sPrevious": '<i class="fa fa-backward"></i>',
+                        "sFirst": '<i class="fa fa-step-backward"></i>',
+                        "sLast": '<i class="fa fa-step-forward"></i>'
+                        }, */
+                    "aria": {
+                        "sortAscending":	"Ordenación ascendente",
+                        "sortDescending":	"Ordenación descendente"
+                    },
+                    "buttons": {
+                        "copy": "Copiar",
+                        "colvis": "Visibilidad"
+                    }
+                },
+                "data" : dataInfo.ALL,
+                "dataSrc": '',
+                "columns": [
+                    {"data" : 'id'},
+                    {"data" : 'nombres'},
+                    {"data" : 'apellidos'},
+                    {"data" : 'telefono'},
+                    {"data" : 'ubicacion'},
+                    {"data" : 'visitante'},
+                    {"defaultContent" : `<button type='button' class='editar btn btn-warning' onclick='editRegisterNewPerson(this)'><ion-icon name='pencil-outline'></ion-icon></button>  <button type='button' class='eliminar btn btn-danger' onclick='deleteNewPerson(this)'><ion-icon name='trash-outline'></ion-icon></button>`}
+                ],
+                
+            });
+            /* table.dataTable().ajax.reload(); */
+            /* getDataEdit("#datable tbody", table); */
+            /* $('tr td:last-child').click(function(){
+                 console.log($(this).parent().find('td:first').text());
+            }); */
+           
+        }    
+    });
+
+}
+function editRegisterNewPerson(ids){
+    const id = $(ids).parent().parent().find('td:first').text()
+        // Send the request
+        $.post("../../recepcion/form-new-person.php", {'editRegisterNewPerson': id}, function(resp) {
+        $("#modalInscriptions").modal('show');                                  
+
+        var fila=`
+        <form class="form-donation" id="formG">
+        <h2 class="text-center">Modificación de Inscripción</h2>
+        <div class="mb-3">
+            <label for="user" class="form-label">Nombres</label>
+            <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombres" value="${resp.nombres}" required>
+        </div>
+        <div class="mb-3">
+            <label for="user" class="form-label">Apellidos</label>
+            <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Apellidos" value="${resp.apellidos}" required>
+        </div>
+        <div class="mb-3">
+            <label for="user" class="form-label">Telefono</label>
+            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Telefono" value="${resp.telefono}" required>
+        </div>
+        <div class="mb-3">
+            <label for="user" class="form-label">Ubicación</label>
+            <select class="form-select" name="option-location" id="option-location" required>
+                <option selected disabled>Seleciona una opción</option>
+                <option value="01">Mérida</option>
+                <option value="02">Caucel</option>
+                <option value="03">Kanasín</option>
+                <option value="04">Umán</option>
+                <option value="05">Otro</option>
+             </select>
+        </div>
+        <div class="mb-3">
+            <label for="user" class="form-label">¿Quién visitó?</label>
+            <select class="form-select" name="option-new-person" id="option-new-person" required>
+                <option selected disabled>Seleciona una opción</option>
+                <option value="01">Joven</option>
+                <option value="02">Adulto</option>
+            </select>
+        </div>
+        <div class="d-grid gap-2">
+            <a type="button" class="btn btn-dark" name="btn-new-person" id="btn-new-person" onclick="updateNewPerson(${id})"><ion-icon name="checkmark-outline"></ion-icon>Actualizar</a>
+        </div>
+        </form>
+    `;
+
+        $('#contentEdit').html(fila);
+        
+    }, 'json');
+
+
+}
+function updateNewPerson( id ){
+    const data = {
+        "nombre":    $('#nombre').val(), 
+        "apellidos": $('#apellidos').val(),
+        "telefono":  $('#telefono').val(),
+        "ubicacion": $('#option-location').val(),
+        "visitante":  $('#option-new-person').val(),
+        "UpdateNewPersonID": id,
+    };
+    $.ajax({
+        type: "POST",
+        url: "../../recepcion/form-new-person.php",
+        data: data,
+        success: function(resp){
+            if(resp == "true"){
+                showRegisterNewPerson();
+                var btnInscription = $("#btn-new-person");
+                btnInscription.css(btnSuccess);
+                btnInscription.text("Guardando");
+                btnInscription.animate({
+                    height: '10px', 
+                    opacity: '0.4',
+                }, 500,);
+                setTimeout(function() {
+                    btnInscription.css(btnSuccess);
+                    btnInscription.text("Realizando Modificación");
+                    btnInscription.animate({
+                        height: '100%', 
+                        opacity: '0.8',
+                    }, 800,);
+                    btnInscription.css(btnStatic);
+                    btnInscription.animate({
+                        height: '100%', 
+                        opacity: '1',
+                    }, 800,);
+                    btnInscription.text("Guardado");
+                    $('#modalInscriptions').modal("hide");
+                    $('#formG').trigger("reset");
+                }, 1000);
+                Swal.fire({
+                    type: 'success',
+                    title: 'Gracias por registrarte',
+                    showConfirmButton: false,
+                    showCloseButton: true,
+                    timer: 2000,
+                })
+            }else if(resp == "not_exit_option"){
+                var btnInscription =  $("#btn-inscription");
+                btnInscription.css(btnWarning);
+                btnInscription.text("Sin resultados");
+                    setTimeout(function() {
+                        btnInscription.css(btnStatic);
+                        btnInscription.text("¡Inscribirme!");
+                    }, 1000);
+                    Swal.fire({
+                        type: 'warning',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'El sistema no encontró la opción selecionada',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    })
+            }
+            else if(resp == "data_invalid"){
+                var userUpdate =  $("#btn-inscription");
+                userUpdate.css(btnWarning);
+                userUpdate.text("Verificar los campos");
+                setTimeout(function() {
+                    userUpdate.css(btnStatic);
+                    userUpdate.text("Guardar");
+                }, 1000);
+                // algo ha salido mal, tu contraseña no coincide o un caracter pusiste mal
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Houston, tenemos un problema...',
+                    text: 'Uno o más campos no están correctamente, verifícalos...',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+            }
+            else if(resp == "empty_fields"){
+                Swal.fire({
+                    type: 'question',
+                    title: '¡Vaya! No recibí ningún dato',
+                    text: '¿Deseas intentarlo nuevamente?',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
+            }
+        },
+        error: function(resp){
+            Swal.fire({
+                type: 'error',
+                title: 'Houston, tenemos un problema...',
+                text: 'Se perdió la conexión, contacta al proveedor.',
+                showConfirmButton: true,
+                confirmButtonText: 'Continuar',
+            });
+        }
+    });
+}
+function deleteNewPerson(ids){
+    const id = $(ids).parent().parent().find('td:first').text()
+    Swal.fire({
+        type: 'info',
+        title: "Deshacer",
+        text: "Eliminarás este registro de usuario, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteNewPerson": id,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-new-person.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        showRegisterNewPerson();
+                    }
+                },
+                error: function(resp){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+                }
+            });
+    
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        });
+
+}
+function inscriptionNewPersonDeleteAll( ){
+    Swal.fire({
+        type: 'warning',
+        title: "Ops...",
+        text: "Está acción eliminará todos los registros y no se podrán recuperar, ¿Deseas continuar?",
+        showCancelButton: true,
+        showConfirmButton: true,
+        confirmButtonText: "Sí, continuar",
+        cancelButtonText: "Regresar",
+        })
+        .then(resultado => {
+        if (resultado.value) {
+            const data = {
+                "deleteNewVisitAll": true,
+            };
+            $.ajax({
+                type: "POST",
+                url: "../../recepcion/form-new-person.php",
+                data: data,
+                success: function(resp){
+                    console.log(resp)
+                    if(resp == "true"){
+                        $('#datable').empty()
+                        showRegisterNewPerson();
+                    }
+                },
+                error: function(resp){
+                    Swal.fire({
+                        type: 'error',
+                        title: 'Houston, tenemos un problema...',
+                        text: 'Se perdió la conexión, contacta al proveedor.',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Continuar',
+                    });
+                }
+            });
+
+        } else {
+            // console.log("*NO Quiere eliminar*");
+        }
+        });
+}
+//SECCION PERFILES USUARIO 
 function Updateprofile(){
     $("#nombre").prop('disabled', false);
     $("#correo").prop('disabled', false);
@@ -1663,8 +2209,8 @@ function updatePhoto( id ){
                         <div class="img-profile">
                             <img  src="" alt="Foto de perfil" class="rounded-circle mb-2" id="userCI" width="128" height="128" />
                         </div>
-                        <h5 class="card-title">Elige una foto para tu perfil</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">Para una mayor calidad de imagen se recomienda 480px por 480px</h6>
+                        <h5 class="card-title">Elige una foto de perfil</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">Para una mayor calidad de imágen utilice 480px por 480px</h6>
                     </div>
                 </div>
 
@@ -1704,7 +2250,9 @@ $("#btn-update-photo").on('click', function() {
         contentType: false,
         processData: false,
         success: function(response) {
-            if (response != 0) {
+            const resp    = response.split(' ')[0];
+            const respath = response.split(' ')[1];
+            if (resp == 'true') {
                 var userUpdate =  $("#btn-update-photo");
                 userUpdate.css(btnSuccess);
                 userUpdate.text("Guardando");
@@ -1713,9 +2261,9 @@ $("#btn-update-photo").on('click', function() {
                     opacity: '0.4',
                 }, 500,);
                 setTimeout(function() {
-                    $("#userImg").attr("src", response);
-                    $("#userImgSB").attr("src", response);
-                    $("#userImgNB").attr("src", response);
+                    $("#userImg").attr("src", respath);
+                    $("#userImgSB").attr("src", respath);
+                    $("#userImgNB").attr("src", respath);
                     userUpdate.css(btnSuccess);
                     userUpdate.text("Guardando");
                     userUpdate.animate({
@@ -1737,17 +2285,36 @@ $("#btn-update-photo").on('click', function() {
                         type: 'success',
                         title: 'Actualizado',
                         showConfirmButton: false,
-                        showCloseButton: true
+                        showCloseButton: true,
+                        timer: 1000,
                     });
                 }, 1300);
-            } else {
-                alert('Formato de imágen incorrecto ó imagen muy pesada.');
+            } 
+            else if (response == 'exist_file'){
+                Swal.fire({
+                    type: 'info',
+                    title: 'Ya existe',
+                    text: 'La foto de perfil ya existe con ese nombre',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Continuar',
+                });
             }
+            else {
+                Swal.fire({
+                    type: 'warning',
+                    title: 'Sin cambios',
+                    text: 'No fue posible cambiar la foto de perfil intenta con (JPEG, JPG, PNG, GIF, SVG) y con un peso menos de 4MB',
+                    showConfirmButton: true,
+                    confirmButtonText: 'Aceptar',
+                });
+            }
+            
         }
     });
     return false;
 });
 }
+//SECCION MENSAJES 
 function sms(){
     const data = {
         "message":    $('#message').val(), 
@@ -1810,9 +2377,8 @@ function sms(){
         }
     });
 }
+//SECCION RUTAS 
 function actionMenu( item ){
-    
-    console.log(item);
     switch (item) {
         case 'panel':
             $.post("../Homepage.php", function(contents){ $("#content").html(contents); validateForm(); monedaMX(); cleanItemMenu();
@@ -1826,11 +2392,14 @@ function actionMenu( item ){
             $.post("../Inscriptions.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
             $('#item-inscriptions').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
+        case 'new-visit':
+            $.post("../NuevasVisitas.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
+            $('#item-new-visit').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
+          break;
         case 'profile':
             $.post("../Profile.php", function(contents){ $("#content").html(contents); validateForm(); cleanItemMenu();
             $('#item-profile').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar')});
           break;
-        
         case 'configurations':
             $.post("../Configurations.php", function(contents){ $("#content").html(contents);  cleanItemMenu();
             $('#item-configurations').addClass("active"); $('#sidebar').removeClass('sidebar collapsed');  $('#sidebar').addClass('sidebar') });
@@ -1863,13 +2432,12 @@ function actionMenu( item ){
           console.log('No existe' + item + '.');
       }
 }
-
-
 function cleanItemMenu (){
     var itemsMenu = [
         'item-desktop',
         'item-donation',
         'item-inscriptions',
+        'item-new-visit',
         'item-profile',
         'item-configurations',
         'item-user-management',

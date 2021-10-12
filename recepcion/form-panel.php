@@ -14,6 +14,12 @@ $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_OBJ);
 $inscriptions = COUNT($result);   
 $inscriptions;    
+// Preparacion BD Consulta automatica Visitas nuevas
+$stmt = $BD->prepare("SELECT * FROM visita_nuevas;" );
+$stmt->execute();
+$result = $stmt->fetchAll(PDO::FETCH_OBJ);
+$newPerson = COUNT($result);   
+$newPerson;  
 // Preparacion BD Consulta automatica Usuarios
 $stmt = $BD->prepare("SELECT * FROM usuarios");
 $stmt->execute();

@@ -28,7 +28,7 @@ require 'Alerts.php';
             <div class="card-body text-center">
                 <div class="img-profile">
                 <img  src="<?php echo $imageUser == '' ? '../../assets/user/profile/default_1.svg' : $imageUser;  ?>" alt="Foto de perfil" class=" rounded-circle mb-2" id="userImg" width="128" height="128" />
-                <span style="font-size: 15px;vertical-align: middle; position:absolute; top:180px; left:150;" onclick="updatePhoto(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span>
+                <span style="font-size: 15px;vertical-align: middle; position:absolute; top:180px; left:auto;" onclick="updatePhoto(<?php echo $idUser ?>)"><ion-icon name="camera"></ion-icon></span>
                 </div>
 
                 <h5 class="card-title mb-0" id="name"><?php echo $nameUser ?></h5>
@@ -42,14 +42,13 @@ require 'Alerts.php';
             <hr class="my-0" />
             <hr class="my-0" />
             <div class="card-body">
-                <h5 class="h6 card-title">Redes Sociales <span style="font-size: 15px;vertical-align: middle;" onclick="socialMedia(<?php echo $idUser ?>)"><ion-icon name="create-outline"></ion-icon></span></h5>
+                <h5 class="h6 card-title">Redes Sociales <span style="font-size: 15px;vertical-align: middle;" onclick="socialMedia(<?php echo $idUser ?>)"><ion-icon name="open"></ion-icon></span></h5>
                 <div class="link-social">
                 <ul class="list-social">
-                
                     <li><a href="<?php echo $Facebook ?>" target="_blank" id="link-facebook"><ion-icon name="logo-facebook"></ion-icon> Facebook</a></li>
                     <li><a href="<?php echo $Whatsapp ?>" target="_blank" id="link-whatsapp"><ion-icon name="logo-whatsapp"></ion-icon> Whatsapp</a></li>
                     <li><a href="<?php echo $Instagram ?>" target="_blank" id="link-instagram"><ion-icon name="logo-instagram"></ion-icon> Instagram</a></li>
-                    <li><a href="<?php echo $Youtube ?>" target="_blank" id="link-instagram"><ion-icon name="logo-youtube"></ion-icon> YouTube</a></li>
+                    <li><a href="<?php echo $Youtube ?>" target="_blank" id="link-youtube"><ion-icon name="logo-youtube"></ion-icon> YouTube</a></li>
                     <li><a href="<?php echo $Web ?>" target="_blank" id="link-web"><ion-icon name="planet-outline"></ion-icon> Web</a></li>
                     <li><a href="mailto:<?php echo $Email ?>" target="_blank" id="link-email"><ion-icon name="mail-outline"></ion-icon> Correo</a></li>
                 </ul>

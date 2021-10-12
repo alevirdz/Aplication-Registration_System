@@ -2,7 +2,7 @@
 session_start();
 require '../config/database.php';
 require 'validations.php';
-/* Cambiar por sesions */
+
 if(isset($_POST['correo']) && isset($_POST['contrasena']) ){
 
      //Verificacion
@@ -11,7 +11,7 @@ if(isset($_POST['correo']) && isset($_POST['contrasena']) ){
         $userPwd    = $_POST['contrasena'];
         
         $checkedEmail = checkedEmail($userEmail);
-        $checkedPwd = checkedPassword($userPwd);
+        $checkedPwd   = checkedPassword($userPwd);
         
         if( $checkedEmail && $checkedPwd ){
 

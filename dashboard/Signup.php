@@ -44,6 +44,12 @@
 													Colaborador
 												</label>
 											</div>
+											<div class="form-check">
+												<input class="form-check-input" type="radio" name="flexRadioDefault" id="t_receptionist" checked value="3">
+												<label class="form-check-label" for="label_receptionist">
+													Recepción
+												</label>
+											</div>
 
 										</div>
 										<div class="text-center mt-3">

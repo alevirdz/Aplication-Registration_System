@@ -84,15 +84,19 @@ $limitConfigInscriptions = $result[0]->limite_inscripciones;
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Correo electrónico</label>
-                            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico">
+                            <input type="email" class="form-control" name="correo" id="correo" placeholder="Correo electrónico" required>
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Tipo de Asignación</label>
-                            <input type="text" class="form-control" name="asignacion" id="asignacion" placeholder="Escriba una asignación Invitado ó Servidor" value="Invitado">
+                            <select class="form-select" name="asignacion" id="asignacion" required>
+                                <option selected>Seleciona una opción</option>
+                                <option value="01">Invitado</option>
+                                <option value="02">Servidor(a)</option>
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="user" class="form-label">Abono</label>
-                            <input type="number" class="form-control" name="abono" id="abono" placeholder="¿Cuánto abono?">
+                            <input type="number" class="form-control" name="abono" id="abono" placeholder="¿Cuánto abonó?" required>
                         </div>
                         <div class="d-grid gap-2">
                             <a type="button" class="btn btn-dark" name="btn-donation" id="btn-inscription" onclick="inscriptions()">¡Inscribirme!</a>
@@ -106,7 +110,7 @@ $limitConfigInscriptions = $result[0]->limite_inscripciones;
     </div>
 </section>
 
-<!-- Modal -->
+<!-- Modal Se utiliza en JS-->
 <div class="modal fade" id="modalInscriptions" tabindex="-1" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" id="activeCenter">
     <div class="modal-content">

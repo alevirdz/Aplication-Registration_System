@@ -1,17 +1,19 @@
+<?php require 'config/configuration.php' ?>
 <!doctype html>
 <html lang="en">
   <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6" crossorigin="anonymous">
-    <!-- Web page CSS -->
-    <link rel="stylesheet" href="assets/css/main.css"/>
-    <link rel="stylesheet" href="assets/css/sweetalert2.min.css"/>
+    <title><?php echo TITLE_APP ?></title>
+    <meta charset='<?php echo CHARSET_APP ?>'>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content='<?php echo VIEWPORT_APP ?>'>
+    <meta name="description" content='<?php echo DESCRIPTION_APP ?>'>
+	  <meta name="author" content='<?php echo AUTOR_APP ?>'>
+	  <meta name="keywords" content='<?php echo KEYWORDS_APP ?>'>
+    <link rel="shortcut icon" href="<?php echo ICON_APP_INDEX ?>" />
+    <!-- Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="<?php echo ROUTE_CSS_INDEX ?>bootstrap.min.css"/>
+    <link rel="stylesheet" href="<?php echo ROUTE_CSS_INDEX ?>main.css"/>
+    <link rel="stylesheet" href="<?php echo ROUTE_CSS_INDEX ?>sweetalert2.min.css"/>
     <script src="https://unpkg.com/ionicons@5.4.0/dist/ionicons.js"></script>
-    <link rel="shortcut icon" href="assets/theme/favicon/diseno-de-interfaz-de-usuario.svg" />
-    <!-- Title -->
-    <title>Site Web</title>
   </head>
   <body>

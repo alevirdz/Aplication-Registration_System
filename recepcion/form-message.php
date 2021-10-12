@@ -2,22 +2,23 @@
 require '../config/database.php';
 include('../../assets/lib/alteria/httpPHPAltiria.php');
 
-
-//enviar mensaje
-if( isset($_POST['sms']) && isset($_POST['message']) ){
+if( 
+  isset($_POST['sms']) && 
+  isset($_POST['message']) 
+){
     // Preparacion BD Consulta automatica
     $stmt = $BD->prepare("SELECT * FROM inscripciones");
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_OBJ);
-
     $messageSMS = $_POST['message'];
+
     if($result ){
             
       foreach( $result as $data ){
         $telefonos[] = $data->telefono;
       }
 
-      $arrayNumber = $telefonos; //print_r( json_encode( $arrayNumber));
+          $arrayNumber = $telefonos; //print_r( json_encode( $arrayNumber));
 
           $cadena = $arrayNumber;
             // XX, YY y ZZ se corresponden con los valores de identificacion del usuario en el sistema.

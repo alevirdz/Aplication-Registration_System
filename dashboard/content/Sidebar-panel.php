@@ -12,9 +12,9 @@ include ('../../recepcion/form-panel.php');
 
 				<ul class="sidebar-nav">
 					<li class="sidebar-header">
-						Pages
+						Opciones
 					</li>
-					<?php if ($rolUser != "2") {?>
+					<?php if ($rolUser === "1") {?>
 					<li class="sidebar-item active" id="item-desktop">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel">
               			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio </span>
@@ -27,17 +27,17 @@ include ('../../recepcion/form-panel.php');
 					</li>
 					<li class="sidebar-item" id="item-inscriptions">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
-              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones de Eventos</span>
+              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones a Eventos</span>
             			</a>
 					</li>
-					<li class="sidebar-item" id="item-inscriptions">
-						<a class="sidebar-link" onclick=actionMenu((this.id)) id="newperson">
-              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Personas nuevas</span>
+					<li class="sidebar-item" id="item-new-visit">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="new-visit">
+              			<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Personas nuevas</span>
             			</a>
 					</li>
 					<li class="sidebar-item" id="item-profile">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="profile">
-              			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
+              			<i class="align-middle" data-feather="user-check"></i> <span class="align-middle">Perfil</span>
             			</a>
 					</li>
 					<li class="sidebar-item" id="item-configurations">
@@ -74,7 +74,7 @@ include ('../../recepcion/form-panel.php');
               			<i class="align-middle" data-feather="map"></i> <span class="align-middle">Mapas</span>
             			</a>
 					</li>
-					<?php } else{ ?>
+					<?php }  else if ($rolUser === "2"){ ?>
 					<li class="sidebar-item active" id="item-desktop">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel">
               			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio </span>
@@ -82,7 +82,7 @@ include ('../../recepcion/form-panel.php');
 					</li>
 					<li class="sidebar-item" id="item-inscriptions">
 						<a class="sidebar-link" onclick=actionMenu((this.id)) id="inscriptions">
-              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones</span>
+              			<i class="align-middle" data-feather="calendar"></i> <span class="align-middle">Inscripciones a Eventos</span>
             			</a>
 					</li>
 					<li class="sidebar-item" id="item-donation">
@@ -95,8 +95,23 @@ include ('../../recepcion/form-panel.php');
               			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
             			</a>
 					</li>
-					<?php }  ?>
-
+					<?php }  else if ($rolUser === "3"){?>
+						<li class="sidebar-item active" id="item-desktop">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="panel">
+              			<i class="align-middle" data-feather="sliders"></i> <span class="align-middle">Escritorio </span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-new-visit">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="new-visit">
+              			<i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Personas nuevas</span>
+            			</a>
+					</li>
+					<li class="sidebar-item" id="item-profile">
+						<a class="sidebar-link" onclick=actionMenu((this.id)) id="profile">
+              			<i class="align-middle" data-feather="user"></i> <span class="align-middle">Perfil</span>
+            			</a>
+					</li>
+					<?php } ?>
 
 
 					

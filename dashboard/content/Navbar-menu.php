@@ -1,3 +1,7 @@
+<?php 
+include ('../recepcion/form-profile.php');
+include ('../recepcion/form-panel.php');
+?>
 <nav class="navbar navbar-expand navbar-light navbar-bg">
 				<a class="sidebar-toggle d-flex">
           			<i class="hamburger align-self-center"></i>
@@ -120,6 +124,7 @@
 							<a class="nav-link dropdown-toggle d-none d-sm-inline-block" href="#" data-bs-toggle="dropdown">
                 				<img src="<?php echo $imageUser == '' ? '../../../assets/user/profile/default_1.svg' : $imageUser;  ?>" class="avatar rounded me-1" id="userImgNB" alt="foto del usuario" /> <span class="text-dark">Opciones</span>
               				</a>
+							  <?php if ($rolUser === "1") {?>
 							<div class="dropdown-menu dropdown-menu-end">
 								<a class="dropdown-item" onclick=actionMenu((this.id)) id="profile"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
 								<!-- <a class="dropdown-item" href="#"><i class="align-middle me-1" data-feather="pie-chart"></i> Analytics</a> -->
@@ -129,6 +134,23 @@
 								<div class="dropdown-divider"></div>
 								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Cerrar sesión</a>
 							</div>
+							<?php } else if ($rolUser === "2"){?>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="profile"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="helps"><i class="align-middle me-1" data-feather="help-circle"></i>Ayuda</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Cerrar sesión</a>
+							</div>
+							<?php } else if ($rolUser === "3"){?>
+							<div class="dropdown-menu dropdown-menu-end">
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="profile"><i class="align-middle me-1" data-feather="user"></i> Perfil</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item" onclick=actionMenu((this.id)) id="helps"><i class="align-middle me-1" data-feather="help-circle"></i>Ayuda</a>
+								<div class="dropdown-divider"></div>
+								<a class="dropdown-item"  id="logoutSesion" onclick=logoutSesion() >Cerrar sesión</a>
+							</div>
+							<?php }?>
 						</li>
 					</ul>
 				</div>

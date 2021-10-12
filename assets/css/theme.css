@@ -1,15 +1,24 @@
+/* Autor: Alevi Rodriguez
+Description: Style settings within the theme
+URL: http://www.aleviwebcoder.com/
+Version: 1.0
+License: GNU General Public License v2 or later
+*/
+
 /* Usar algunos colores 
 https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&utm_medium=reactlist&utm_campaign=architectangular */
 /*MODO NOCHE*/
-/* h1,h2,h3,h4,h5,span,p{
+/*  h1,h2,h3,h4,h5,label,span,p,th,tr, .h2{
   color: #ffffff;
 }
+
 .main {
   background:rgb(27, 29, 30) !important;
 }
 .navbar-bg{
   background:rgb(0 0 0) !important;
 }
+
 #sidebar{
   background-color: rgb(36 36 36);
 }
@@ -20,8 +29,12 @@ https://dashboardpack.com/live-demo-preview/?livedemo=1881?utm_source=colorlib&u
   background-color: rgb(37 40 41);
 }
 .card-title {
-  color: #ffffff;
-} */
+  color: #ffffff !important;
+}
+//Afecta el nombre del creador del desarollador!!!
+.text-muted{ 
+  color: #ffffff !important;
+}  */
 /*FIN MODO NOCHE*/
 
 
@@ -31,7 +44,7 @@ a.paginate_button.item.active{
   color: white !important;
   background: #0c7bdd;
 }
-/* Stilos de datables */
+/* DATABLE */
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover{
     color: #666 !important;
     border: 1px solid #fff !important;
@@ -52,6 +65,13 @@ th.sorting{
 .table>:not(:last-child)>:last-child>*, .table tbody, .table td, .table tfoot, .table th, .table thead, .table tr {
   border-color: #e4e4e4;
 }
+@media only screen and (max-width : 768px) {
+.dataTables_wrapper .dataTables_info, .dataTables_wrapper .dataTables_paginate {
+    float: inline-start !important;
+    text-align: center;
+}
+}
+
 /*Profile*/
 ul.list-social{
 list-style: none;
@@ -59,9 +79,28 @@ list-style: none;
 .align-icons{
   align-items: center;
 }
-
-a#link-facebook, a#link-whatsapp, a#link-instagram,
-a#link-youtube, a#link-web, a#link-email{
+/* COLORES DE REDES SOCIALES */
+a#link-facebook{
+  color: #2d62df;
+  font-size: 1.1em;
+}
+a#link-whatsapp{
+  color: #0aaa5f;
+  font-size: 1.1em;
+}
+a#link-instagram{
+  color: #db7a13e6;
+  font-size: 1.1em;
+}
+a#link-youtube{
+  color: #db1c13;
+  font-size: 1.1em;
+}
+a#link-web{
+  color: #0a9fcc;
+  font-size: 1.1em;
+}
+a#link-email{
   color: #030303;
   font-size: 1.1em;
 }
